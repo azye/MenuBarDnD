@@ -12,16 +12,23 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet weak var window: NSWindow!
-    let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-2)
-
+    let statusItem = NSStatusBar.system().statusItem(withLength: NSSquareStatusItemLength)
+    
+    func printStatus(sender: AnyObject) {
+        print("Application clicked")
+    }
+    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
+        if let button = statusItem.button {
+            button.image = NSImage(named: "StatusBarButtonImage")
+            button.action = #selector(self.printStatus)
+        }
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
 
-
-}
+    }
 
