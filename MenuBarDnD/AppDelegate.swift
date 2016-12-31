@@ -14,16 +14,28 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var window: NSWindow!
     let statusItem = NSStatusBar.system().statusItem(withLength: NSSquareStatusItemLength)
     
-    func printStatus(sender: AnyObject) {
+    func startService() {
         print("Application clicked")
+    }
+    
+    func quitApplication() {
+        NSApplication.shared().terminate(self)
     }
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
         if let button = statusItem.button {
             button.image = NSImage(named: "StatusBarButtonImage")
-            button.action = #selector(self.printStatus)
+//            button.action = #selector(self.printStatus)
         }
+        
+        let menu = NSMenu()
+        
+        menu.addItem(NSMenuItem(title: "Start Do Not Disturb", action: #selector(self.startService), keyEquivalent: "P"))
+        menu.addItem(NSMenuItem.separator())
+        menu.addItem(NSMenuItem(title: "Quit", action: #selector(self.quitApplication), keyEquivalent: "q"))
+        
+        statusItem.menu = menu
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
