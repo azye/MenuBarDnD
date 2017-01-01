@@ -2,6 +2,11 @@
 
 MenuBarDnD is a MacOS menubar application that toggles Do Not Disturb on your Mac. It is a useful, but horribly underused feature in MacOS because the shortcut and toggle are somewhat hidden.  
 
+## Installation
+*Coming soon*
+
+I plan to release this app through Homebrew. Until then, you can clone this repo and run it through XCode. 
+
 ## Usage
 The application is activated by simply clicking on the menubar icon.  
 ![deactivated](/img/deactivated.png)
