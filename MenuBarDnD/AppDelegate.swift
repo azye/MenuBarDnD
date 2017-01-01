@@ -10,12 +10,11 @@ import Cocoa
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-
     @IBOutlet weak var window: NSWindow!
 
     let contextMenu = NSMenu()
     let statusItem = NSStatusBar.system().statusItem(withLength: NSSquareStatusItemLength)
-    
+
     func startService() {
         print("Do not disturb started")
     }
@@ -33,18 +32,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             statusItem.menu = nil
         } else {
             startService()
+            
+            if let button = statusItem.button {
+                button.image = NSImage(named: "DndStatusBarButtonImage")
+            }
         }
-        
     }
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
         contextMenu.addItem(NSMenuItem(title: "Start Do Not Disturb", action: #selector(self.startService), keyEquivalent: "P"))
         contextMenu.addItem(NSMenuItem.separator())
-        contextMenu.addItem(NSMenuItem(title: "Quit", action: #selector(self.quitApplication), keyEquivalent: "q"))
+        contextMenu.addItem(NSMenuItem(title: "Quit", action:
+            #selector(self.quitApplication), keyEquivalent: "q"))
         
         if let button = statusItem.button {
-            button.image = NSImage(named: "StatusBarButtonImage")
+            button.image = NSImage(named: "DisturbStatusBarButtonImage")
             button.action = #selector(self.statusBarButtonClicked(sender:))
             button.sendAction(on: [.leftMouseUp, .rightMouseUp])
         }
@@ -54,5 +57,5 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Insert code here to tear down your application
     }
 
-    }
+}
 

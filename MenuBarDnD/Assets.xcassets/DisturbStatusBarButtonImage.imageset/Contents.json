@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "mac",
-      "filename" : "StatusBarButtonImage@2x.png",
+      "filename" : "disturb.png",
       "scale" : "1x"
     },
     {
