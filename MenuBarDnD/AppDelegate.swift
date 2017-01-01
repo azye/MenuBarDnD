@@ -12,30 +12,42 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet weak var window: NSWindow!
+
+    let contextMenu = NSMenu()
     let statusItem = NSStatusBar.system().statusItem(withLength: NSSquareStatusItemLength)
     
     func startService() {
-        print("Application clicked")
+        print("Do not disturb started")
     }
     
     func quitApplication() {
         NSApplication.shared().terminate(self)
     }
     
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Insert code here to initialize your application
-        if let button = statusItem.button {
-            button.image = NSImage(named: "StatusBarButtonImage")
-//            button.action = #selector(self.printStatus)
+    func statusBarButtonClicked(sender: NSStatusBarButton) {
+        let event = NSApp.currentEvent!
+        
+        if event.type == NSEventType.rightMouseUp {
+            statusItem.menu = contextMenu
+            statusItem.popUpMenu(contextMenu)
+            statusItem.menu = nil
+        } else {
+            startService()
         }
         
-        let menu = NSMenu()
+    }
+    
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
+        // Insert code here to initialize your application
+        contextMenu.addItem(NSMenuItem(title: "Start Do Not Disturb", action: #selector(self.startService), keyEquivalent: "P"))
+        contextMenu.addItem(NSMenuItem.separator())
+        contextMenu.addItem(NSMenuItem(title: "Quit", action: #selector(self.quitApplication), keyEquivalent: "q"))
         
-        menu.addItem(NSMenuItem(title: "Start Do Not Disturb", action: #selector(self.startService), keyEquivalent: "P"))
-        menu.addItem(NSMenuItem.separator())
-        menu.addItem(NSMenuItem(title: "Quit", action: #selector(self.quitApplication), keyEquivalent: "q"))
-        
-        statusItem.menu = menu
+        if let button = statusItem.button {
+            button.image = NSImage(named: "StatusBarButtonImage")
+            button.action = #selector(self.statusBarButtonClicked(sender:))
+            button.sendAction(on: [.leftMouseUp, .rightMouseUp])
+        }
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
