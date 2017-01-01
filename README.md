@@ -15,3 +15,6 @@ Right-clicking the menubar icon will open a menu where you can toggle or quit th
 
 ## Known Issues
 - Do Not Disturb gets automatically turned off at midnight. MenuBarDnD does not currently deal with it at all.
+- Do Not Disturb settings like setting up custom DnD schedules are not supported either.
+
+These issues are here partly because Apple hasn't realsed any public API to the Do Not Disturb feature. I will be looking for workarounds to hopefully fix these issues.
