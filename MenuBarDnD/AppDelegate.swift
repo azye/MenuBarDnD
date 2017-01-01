@@ -17,30 +17,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let statusItem = NSStatusBar.system().statusItem(withLength: NSSquareStatusItemLength)
     let options : NSDictionary = [kAXTrustedCheckOptionPrompt.takeRetainedValue() as NSString: true]
     
-    func startService() {
+    func toggleService() {
         print("Do not disturb started")
         
         if let path = Bundle.main.path(forResource: "dnd", ofType:"scpt") {
             let task = Process()
             task.launchPath = "/usr/bin/osascript"
             task.arguments = [path]
-            print(path)
             task.launch()
         }
     }
-    
-    func endService() {
-        print("Do not disturb ended")
-        
-        if let path = Bundle.main.path(forResource: "dnd", ofType:"scpt") {
-            let task = Process()
-            task.launchPath = "/usr/bin/osascript"
-            task.arguments = [path]
-            print(path)
-            task.launch()
-        }
-    }
-    
+ 
     func quitApplication() {
         NSApplication.shared().terminate(self)
     }
@@ -59,13 +46,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     if let button = statusItem.button {
                         button.image = NSImage(named: "DisturbStatusBarButtonImage")
                     }
-                    endService()
+                    toggleService()
                     dndIsActive = false
                 } else {
                     if let button = statusItem.button {
                         button.image = NSImage(named: "DndStatusBarButtonImage")
                     }
-                    startService()
+                    toggleService()
                     dndIsActive = true
                 }
             }
@@ -75,7 +62,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
 
         // Insert code here to initialize your application
-        contextMenu.addItem(NSMenuItem(title: "Start Do Not Disturb", action: #selector(self.startService), keyEquivalent: "P"))
+        contextMenu.addItem(NSMenuItem(title: "Start Do Not Disturb", action: #selector(self.toggleService), keyEquivalent: "P"))
         contextMenu.addItem(NSMenuItem.separator())
         contextMenu.addItem(NSMenuItem(title: "Quit", action:
             #selector(self.quitApplication), keyEquivalent: "q"))
