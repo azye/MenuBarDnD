@@ -18,7 +18,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let options : NSDictionary = [kAXTrustedCheckOptionPrompt.takeRetainedValue() as NSString: true]
     
     func toggleService() {
-        print("Do not disturb has been toggled")
+        if dndIsActive {
+            if let button = statusItem.button {
+                button.image = NSImage(named: "DisturbStatusBarButtonImage")
+            }
+            print("Do not disturb has been turned off")
+            dndIsActive = false
+        } else {
+            if let button = statusItem.button {
+                button.image = NSImage(named: "DndStatusBarButtonImage")
+            }
+            print("Do not disturb has been turned on")
+            dndIsActive = true
+        }
         
         if let path = Bundle.main.path(forResource: "dnd", ofType:"scpt") {
             let task = Process()
@@ -42,19 +54,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         } else {
             let accessibilityEnabled = AXIsProcessTrustedWithOptions(options)
             if accessibilityEnabled {
-                if dndIsActive {
-                    if let button = statusItem.button {
-                        button.image = NSImage(named: "DisturbStatusBarButtonImage")
-                    }
-                    toggleService()
-                    dndIsActive = false
-                } else {
-                    if let button = statusItem.button {
-                        button.image = NSImage(named: "DndStatusBarButtonImage")
-                    }
-                    toggleService()
-                    dndIsActive = true
-                }
+                toggleService()
             }
         }
     }
@@ -74,7 +74,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if initialState {
             dndIsActive = true
         }
-
+        
+        
+        
         if let button = statusItem.button {
             if dndIsActive {
                 button.image = NSImage(named: "DndStatusBarButtonImage")
