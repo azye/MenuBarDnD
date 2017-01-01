@@ -11,12 +11,16 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var window: NSWindow!
-
+    var dndIsActive: Bool = false
     let contextMenu = NSMenu()
     let statusItem = NSStatusBar.system().statusItem(withLength: NSSquareStatusItemLength)
 
     func startService() {
         print("Do not disturb started")
+    }
+    
+    func endService() {
+        print("Do not disturb ended")
     }
     
     func quitApplication() {
@@ -31,10 +35,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             statusItem.popUpMenu(contextMenu)
             statusItem.menu = nil
         } else {
-            startService()
-            
-            if let button = statusItem.button {
-                button.image = NSImage(named: "DndStatusBarButtonImage")
+            if dndIsActive {
+                if let button = statusItem.button {
+                    button.image = NSImage(named: "DisturbStatusBarButtonImage")
+                }
+                endService()
+                dndIsActive = false
+            } else {
+                if let button = statusItem.button {
+                    button.image = NSImage(named: "DndStatusBarButtonImage")
+                }
+                startService()
+                dndIsActive = true
             }
         }
     }
