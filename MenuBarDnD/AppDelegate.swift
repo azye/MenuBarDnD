@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Foundation
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -17,10 +18,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func startService() {
         print("Do not disturb started")
+        
+        if let path = Bundle.main.path(forResource: "dnd", ofType:"scpt") {
+            let task = Process()
+            task.launchPath = "/usr/bin/osascript"
+            task.arguments = [path]
+            print(path)
+            task.launch()
+        }
     }
     
     func endService() {
         print("Do not disturb ended")
+        
+        if let path = Bundle.main.path(forResource: "dnd", ofType:"scpt") {
+            let task = Process()
+            task.launchPath = "/usr/bin/osascript"
+            task.arguments = [path]
+            print(path)
+            task.launch()
+        }
+
     }
     
     func quitApplication() {

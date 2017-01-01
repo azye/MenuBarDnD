@@ -501,6 +501,7 @@
 				FAC169991E184D820033DB1F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FAC1699A1E184D820033DB1F /* Build configuration list for PBXNativeTarget "MenuBarDnDTests" */ = {
 			isa = XCConfigurationList;
@@ -509,6 +510,7 @@
 				FAC1699C1E184D820033DB1F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FAC1699D1E184D820033DB1F /* Build configuration list for PBXNativeTarget "MenuBarDnDUITests" */ = {
 			isa = XCConfigurationList;
@@ -517,6 +519,7 @@
 				FAC1699F1E184D820033DB1F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
