@@ -74,16 +74,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if initialState {
             dndIsActive = true
         }
-        
-        
-        
+
         if let button = statusItem.button {
             if dndIsActive {
                 button.image = NSImage(named: "DndStatusBarButtonImage")
             } else {
                 button.image = NSImage(named: "DisturbStatusBarButtonImage")
             }
-            
             button.action = #selector(self.statusBarButtonClicked(sender:))
             button.sendAction(on: [.leftMouseUp, .rightMouseUp])
         }

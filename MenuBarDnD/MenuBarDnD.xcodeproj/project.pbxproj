@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA3241011E19C9380054EAE9 /* dnd.scpt in Resources */ = {isa = PBXBuildFile; fileRef = FA3241001E19C9380054EAE9 /* dnd.scpt */; };
 		FAC169781E184D810033DB1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC169771E184D810033DB1F /* AppDelegate.swift */; };
 		FAC1697A1E184D810033DB1F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAC169791E184D810033DB1F /* Assets.xcassets */; };
 		FAC1697D1E184D810033DB1F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAC1697B1E184D810033DB1F /* MainMenu.xib */; };
@@ -32,6 +33,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FA3241001E19C9380054EAE9 /* dnd.scpt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dnd.scpt; path = ../script/dnd.scpt; sourceTree = "<group>"; };
 		FAC169741E184D810033DB1F /* MenuBarDnD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MenuBarDnD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAC169771E184D810033DB1F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FAC169791E184D810033DB1F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 		FAC1696B1E184D810033DB1F = {
 			isa = PBXGroup;
 			children = (
+				FA3241001E19C9380054EAE9 /* dnd.scpt */,
 				FAC169761E184D810033DB1F /* MenuBarDnD */,
 				FAC169861E184D810033DB1F /* MenuBarDnDTests */,
 				FAC169911E184D820033DB1F /* MenuBarDnDUITests */,
@@ -230,6 +233,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAC1697A1E184D810033DB1F /* Assets.xcassets in Resources */,
+				FA3241011E19C9380054EAE9 /* dnd.scpt in Resources */,
 				FAC1697D1E184D810033DB1F /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,6 +1,6 @@
 # MenuBarDnD
 
-MenuBarDnD is a MacOS menubar application that toggles Do Not Disturb on your Mac. It is a useful, but horribly underused feature in MacOS because the shortcut and toggle are somewhat hidden.  
+MenuBarDnD is a menubar application that toggles Do Not Disturb(DnD) on your Mac. DnD is a useful, but horribly underused feature in MacOS because the shortcut and toggle are somewhat hidden.
 
 ## Installation
 *Coming soon*
