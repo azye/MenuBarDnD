@@ -18,7 +18,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let options : NSDictionary = [kAXTrustedCheckOptionPrompt.takeRetainedValue() as NSString: true]
     
     func toggleService() {
-        print("Do not disturb started")
+        print("Do not disturb has been toggled")
         
         if let path = Bundle.main.path(forResource: "dnd", ofType:"scpt") {
             let task = Process()
@@ -60,15 +60,28 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-
         // Insert code here to initialize your application
-        contextMenu.addItem(NSMenuItem(title: "Start Do Not Disturb", action: #selector(self.toggleService), keyEquivalent: "P"))
+        contextMenu.addItem(NSMenuItem(title: "Toggle Do Not Disturb", action: #selector(self.toggleService), keyEquivalent: "P"))
         contextMenu.addItem(NSMenuItem.separator())
         contextMenu.addItem(NSMenuItem(title: "Quit", action:
             #selector(self.quitApplication), keyEquivalent: "q"))
         
+        let theDefaults = UserDefaults(suiteName: "com.apple.notificationcenterui")
+        let initialState = theDefaults?.bool(forKey: "doNotDisturb") ?? false
+        
+        print(initialState)
+        
+        if initialState {
+            dndIsActive = true
+        }
+
         if let button = statusItem.button {
-            button.image = NSImage(named: "DisturbStatusBarButtonImage")
+            if dndIsActive {
+                button.image = NSImage(named: "DndStatusBarButtonImage")
+            } else {
+                button.image = NSImage(named: "DisturbStatusBarButtonImage")
+            }
+            
             button.action = #selector(self.statusBarButtonClicked(sender:))
             button.sendAction(on: [.leftMouseUp, .rightMouseUp])
         }
