@@ -15,7 +15,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var dndIsActive: Bool = false
     let contextMenu = NSMenu()
     let statusItem = NSStatusBar.system().statusItem(withLength: NSSquareStatusItemLength)
-
+    let options : NSDictionary = [kAXTrustedCheckOptionPrompt.takeRetainedValue() as NSString: true]
+    
     func startService() {
         print("Do not disturb started")
         
@@ -38,7 +39,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             print(path)
             task.launch()
         }
-
     }
     
     func quitApplication() {
@@ -53,23 +53,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             statusItem.popUpMenu(contextMenu)
             statusItem.menu = nil
         } else {
-            if dndIsActive {
-                if let button = statusItem.button {
-                    button.image = NSImage(named: "DisturbStatusBarButtonImage")
+            let accessibilityEnabled = AXIsProcessTrustedWithOptions(options)
+            if accessibilityEnabled {
+                if dndIsActive {
+                    if let button = statusItem.button {
+                        button.image = NSImage(named: "DisturbStatusBarButtonImage")
+                    }
+                    endService()
+                    dndIsActive = false
+                } else {
+                    if let button = statusItem.button {
+                        button.image = NSImage(named: "DndStatusBarButtonImage")
+                    }
+                    startService()
+                    dndIsActive = true
                 }
-                endService()
-                dndIsActive = false
-            } else {
-                if let button = statusItem.button {
-                    button.image = NSImage(named: "DndStatusBarButtonImage")
-                }
-                startService()
-                dndIsActive = true
             }
         }
     }
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+
         // Insert code here to initialize your application
         contextMenu.addItem(NSMenuItem(title: "Start Do Not Disturb", action: #selector(self.startService), keyEquivalent: "P"))
         contextMenu.addItem(NSMenuItem.separator())
