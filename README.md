@@ -4,10 +4,10 @@ MenuBarDnD is a menubar application that toggles Do Not Disturb(DnD) on your Mac
 
 ## Installation
 MenuBarDnD can be installed with Homebrew using the following commands.  
-`
-brew tap alexzye/mbdnd  
-brew cask install menubardnd  
-`  
+```
+brew tap alexzye/mbdnd   
+brew cask install menubardnd   
+```
 
 ## Usage
 The application is activated by simply clicking on the menubar icon.  
