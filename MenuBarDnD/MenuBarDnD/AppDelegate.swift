@@ -17,6 +17,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let statusItem = NSStatusBar.system().statusItem(withLength: NSSquareStatusItemLength)
     let options : NSDictionary = [kAXTrustedCheckOptionPrompt.takeRetainedValue() as NSString: true]
     
+    func runScript() {
+        if let path = Bundle.main.path(forResource: "dnd", ofType:"scpt") {
+            let task = Process()
+            task.launchPath = "/usr/bin/osascript"
+            task.arguments = [path]
+            task.launch()
+        }
+    }
+    
     func toggleService() {
         if dndIsActive {
             if let button = statusItem.button {
@@ -32,11 +41,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             dndIsActive = true
         }
         
-        if let path = Bundle.main.path(forResource: "dnd", ofType:"scpt") {
-            let task = Process()
-            task.launchPath = "/usr/bin/osascript"
-            task.arguments = [path]
-            task.launch()
+        self.runScript()
+    }
+    
+    func midnightCheck() {
+        if dndIsActive {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                let defaults = UserDefaults(suiteName: "com.apple.notificationcenterui")
+                let state = defaults?.bool(forKey: "doNotDisturb") ?? false
+                
+                if state != self.dndIsActive {
+                    self.runScript()
+                }
+            })
         }
     }
  
@@ -69,10 +86,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let theDefaults = UserDefaults(suiteName: "com.apple.notificationcenterui")
         let initialState = theDefaults?.bool(forKey: "doNotDisturb") ?? false
         
-        print(initialState)
-        
         if initialState {
             dndIsActive = true
+            print("DnD is enabled on app startup.")
+        } else {
+            print("DnD is disabled on app startup.")
         }
 
         if let button = statusItem.button {
@@ -84,6 +102,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             button.action = #selector(self.statusBarButtonClicked(sender:))
             button.sendAction(on: [.leftMouseUp, .rightMouseUp])
         }
+        
+        let dayChangeNotification = Notification.Name.NSCalendarDayChanged
+        NotificationCenter.default.addObserver(self, selector: #selector(self.midnightCheck), name: dayChangeNotification, object: nil)
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
