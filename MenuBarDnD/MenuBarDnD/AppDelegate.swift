@@ -45,11 +45,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func midnightCheck() {
-        let defaults = UserDefaults(suiteName: "com.apple.notificationcenterui")
-        let state = defaults?.bool(forKey: "doNotDisturb") ?? false
-        
-        if state != self.dndIsActive {
-            self.runScript()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            let defaults = UserDefaults(suiteName: "com.apple.notificationcenterui")
+            let state = defaults?.bool(forKey: "doNotDisturb") ?? false
+            
+            if state != self.dndIsActive {
+                self.runScript()
+            }
         }
     }
  
